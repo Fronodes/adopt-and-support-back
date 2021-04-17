@@ -8,9 +8,7 @@ const petSchema = new Schema(
       required: true,
     },
     photoUrls: [String],
-    type: {
-      type: String,
-    },
+    type: { type: Schema.Types.ObjectId, ref: "Category" },
     gender: {
       type: String,
     },

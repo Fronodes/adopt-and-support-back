@@ -19,7 +19,7 @@ export default async (req, res) => {
         );
         return res.status(200).json({
           favorites: user.favorites,
-          message: "Pet added to favorites",
+          message: "Favorited",
         });
       } else {
         const user = await User.findOneAndUpdate(
@@ -33,7 +33,7 @@ export default async (req, res) => {
         );
         return res.status(200).json({
           favorites: user.favorites,
-          message: "Pet removed from favorites",
+          message: "Unfavorited",
         });
       }
     } else {

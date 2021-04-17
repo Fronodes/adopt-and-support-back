@@ -5,6 +5,7 @@ import { specs, swaggerConfig } from "../../config/index.js";
 import user from "./user.js";
 import packages from "./package.js";
 import pets from "./pet.js";
+import categories from "./category.js";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.get(specs, setup(specDoc, { explorer: true }));
 router.use("/user", user);
 router.use("/packages", packages);
 router.use("/pets", pets);
+router.use("/categories", categories);
 
 export default router;

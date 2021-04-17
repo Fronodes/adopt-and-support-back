@@ -23,8 +23,7 @@ export default async (req, res, next) => {
     });
 
     if (!exists) return res.status(400).json(errorHelper("00009", req));
-    console.log('asd')
-    next(); 
+    next();
   } catch (err) {
     return res.status(401).json(errorHelper("00012", req, err.message));
   }

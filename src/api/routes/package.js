@@ -4,4 +4,4 @@ const router = Router();
 
 router.get("/", getPackages);
 
-export default router
+export default router;
