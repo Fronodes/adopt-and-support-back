@@ -1,12 +1,21 @@
-import express from 'express';
-import { port } from './config/index.js';
-import loader from './loaders/index.js';
+import express from "express";
+import { port } from "./config/index.js";
+import loader from "./loaders/index.js";
+import fs from "fs";
 
 const app = express();
 
-loader(app);
+function createDir() {
+  var dir = "uploads/";
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, "0744");
+  }
+}
+createDir();
 
-app.listen(port, err => {
+loader(app);
+app.use(express.static("uploads"));
+app.listen(port, (err) => {
   if (err) {
     console.log(err);
     return process.exit(1);
@@ -14,4 +23,4 @@ app.listen(port, err => {
   console.log(`Server is running on ${port}`);
 });
 
-export default app
+export default app;

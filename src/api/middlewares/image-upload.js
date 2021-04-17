@@ -1,12 +1,40 @@
-import multer, { memoryStorage } from 'multer';
+import multer, { memoryStorage } from "multer";
+import path from "path";
 
-const storage = memoryStorage();
-const fileFilter = (_req, file, cb) => {
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/svg+xml') {
-    cb(null, true);
+var randLetter = Date.now();
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, randLetter + file.originalname);
+  },
+});
+
+var upload = multer({
+  storage: storage,
+  fileFilter: function (_req, file, cb) {
+    checkFileType(file, cb);
+  },
+  limits: {
+    fieldSize: 5048576,
+  },
+});
+
+function checkFileType(file, cb) {
+  // Allowed ext
+  const filetypes = /jpeg|jpg|png|gif/;
+  // Check ext
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // Check mime
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (mimetype && extname) {
+    return cb(null, true);
   } else {
-    cb(new Error('Please choose a valid image file.'), false);
+    cb("Error: Images Only!");
   }
-};
+}
 
-export default multer({ storage: storage, limits: { fileSize: 1000000 }, fileFilter: fileFilter }).single('image');
+export default upload;
